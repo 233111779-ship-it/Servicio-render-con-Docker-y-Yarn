@@ -1,18 +1,16 @@
-FROM node:20
-
-RUN corepack enable && corepack prepare yarn@stable --activate
+FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-# Desactivamos el modo estricto de Yarn mediante variables de entorno
-ENV YARN_ENABLE_IMMUTABLE_INSTALLS=false
+# Copiamos solo los archivos de dependencias
+COPY package.json ./
 
-COPY package.json yarn.lock .yarnrc.yml ./
+# Forzamos el uso de yarn clásico (v1) para evitar el bug de bloqueo
+RUN yarn set version classic && yarn install
 
-RUN yarn install
-
+# Copiamos el resto de los archivos
 COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["node", "server.js"]
