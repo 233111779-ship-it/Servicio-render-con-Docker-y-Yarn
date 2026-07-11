@@ -1,5 +1,5 @@
 {
-  "name": "mi-app-docker",
+  "name": "Servicio-render-con-Docker-y-Yarn",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
